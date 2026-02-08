@@ -1,0 +1,23 @@
+.send-button {
+  color: white;
+  background-color: green;
+  padding: 12px 20px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+input {
+  /* border:none; */
+  border-radius: 10px;
+  padding: 12px 15px;
+  border-width: 1px;
+  font-size: 15px;
+  flex-grow: 1;
+}
+.chat-input-container {
+  display: flex;
+
+  margin-bottom: 60px;
+}

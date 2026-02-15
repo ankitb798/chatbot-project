@@ -35,14 +35,11 @@ function App() {
   ]);
   return (
     <div className="app-container">
-      <ChatMessages
-        setChatMessages={setChatMessages}
-        chatMessages={chatMessages}
-      />
+     
       <ChatInput
         chatMessages={chatMessages}
         setChatMessages={setChatMessages}
-        isLoading={false}
+        setIsLoading={false}
       />
     </div>
   );

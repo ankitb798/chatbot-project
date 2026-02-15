@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { Chatbot } from "supersimpledev";
-import './ChatInput.css'
-export function ChatInput({ chatMessages, setChatMessages, isLoading }) {
+import "./ChatInput.css";
+export function ChatInput({
+  chatMessages,
+  setChatMessages,
+  setIsLoading,
+  isLoading,
+}) {
   const [inputText, setInputText] = useState("");
   function saveInputText(event) {
     setInputText(event.target.value);
@@ -11,8 +16,6 @@ export function ChatInput({ chatMessages, setChatMessages, isLoading }) {
     if (event.key == "Escape") setInputText("");
   }
 
-  // if(isLoading)
-  // {
   async function sendMessage() {
     setInputText("");
     const newChatMessages = [
@@ -39,7 +42,7 @@ export function ChatInput({ chatMessages, setChatMessages, isLoading }) {
         id: crypto.randomUUID(),
       },
     ]);
-    isLoading = true;
+    setIsLoading(true);
 
     const response = await Chatbot.getResponseAsync(inputText);
 
@@ -51,20 +54,26 @@ export function ChatInput({ chatMessages, setChatMessages, isLoading }) {
         id: crypto.randomUUID(),
       },
     ]);
+    setIsLoading(false);
     setInputText("");
   }
 
   return (
     <div className="chat-input-container">
       <input
-        class="input"
+        className="input"
         placeholder="Send a message to the chatbot"
         size="30"
         value={inputText}
         onChange={saveInputText}
         onKeyDown={PressKey}
+        disabled={isLoading}
       />
-      <button className="send-button" onClick={sendMessage}>
+      <button
+        className="send-button"
+        onClick={sendMessage}
+        disabled={isLoading}
+      >
         Send
       </button>
     </div>

@@ -10,6 +10,7 @@ function App() {
     { message: "can you get me todays date", sender: "user", id: "id3" },
     { message: "today is september 27", sender: "robot", id: "id4" },
   ]);
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div className="app-container">
       <ChatMessages
@@ -19,7 +20,8 @@ function App() {
       <ChatInput
         chatMessages={chatMessages}
         setChatMessages={setChatMessages}
-        isLoading={false}
+        setIsLoading={setIsLoading}
+        isLoading={isLoading}
       />
     </div>
   );

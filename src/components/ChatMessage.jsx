@@ -1,46 +1,66 @@
+import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 import RobotProfileImage from "../assets/robot.png";
 import UserProfileImage from "../assets/user.png";
+
 export function ChatMessage({ message, sender }) {
-  // const message=props.message;
-  // const sender=props.sender;
-  // const {message,sender}=props;
-  /*if(sender==='robot')
-                        {return ( 
-                            <div>
-                              <img src="robot.png"  width="50" />
-                              {message}
-                            </div>
-                        );
-            }*/
+
+  const [copied, setCopied] = useState(false);
+
+  function copyMessage() {
+    if (typeof message !== "string") return;
+
+    navigator.clipboard.writeText(message);
+
+    setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 1500);
+  }
+
   return (
     <div
-      className={sender === "user" ? "chat-message-user" : "chat-message-robot"}
+      className={
+        sender === "user"
+          ? "chat-message-user"
+          : "chat-message-robot"
+      }
     >
       {sender === "robot" && (
-        <img src={RobotProfileImage} className="chat-message-profile" />
+        <img
+          src={RobotProfileImage}
+          className="chat-message-profile"
+          alt="Robot"
+        />
       )}
-      <div className="message">{message}</div>
+
+      <div className="message">
+
+        {sender === "robot" && typeof message === "string" && (
+          <button
+            className="copy-button"
+            onClick={copyMessage}
+          >
+            {copied ? "✓" : "📋"}
+          </button>
+        )}
+
+        {typeof message === "string" ? (
+          <ReactMarkdown>{message}</ReactMarkdown>
+        ) : (
+          message
+        )}
+
+      </div>
+
       {sender === "user" && (
-        <img src={UserProfileImage} className="chat-message-profile" />
+        <img
+          src={UserProfileImage}
+          className="chat-message-profile"
+          alt="User"
+        />
       )}
-    </div>
-  );
-}
-function App() {
-  const [chatMessages, setChatMessages] = useState([
-    { message: "hello chatbot", sender: "user", id: "id1" },
-    { message: "hello! how can i help you", sender: "robot", id: "id2" },
-    { message: "can you get me todays date", sender: "user", id: "id3" },
-    { message: "today is september 27", sender: "robot", id: "id4" },
-  ]);
-  return (
-    <div className="app-container">
-     
-      <ChatInput
-        chatMessages={chatMessages}
-        setChatMessages={setChatMessages}
-        setIsLoading={false}
-      />
     </div>
   );
 }
